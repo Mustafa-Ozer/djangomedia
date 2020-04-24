@@ -1,0 +1,125 @@
+{% extends 'layout.html' %}
+
+
+{% block baslik %}
+    <title>trigoin | {{article.title}}</title>
+{% endblock baslik %}
+
+
+{% block body %}
+
+<div class="row">
+  <div class="col-md-6 offset-md-3"> 
+
+    <!-- Post Content Column -->
+    <div class="col-lg-15">
+
+      <!-- Title -->
+      <h3 class="mt-4">{{article.title}}</h3>
+      <hr>
+      <!-- Author -->
+      <p class="lead">
+        <div class="media mb-4">
+          
+          {% for about in userabout %}
+          {% if about.pphoto %}
+          <img class="d-flex mr-3 rounded-circle" src="{{about.pphoto.url}}" width="50" height="50" alt="">
+          {% else %}
+          <img class="d-flex mr-3 rounded-circle" src="https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-256.png" width="50" height="50" alt=""> 
+          {% endif %}
+          {% endfor %}
+            
+          
+            
+          
+          <div class="media-body">
+            <a href="{% url 'profile' article.author_id %}">{{article.author}}</a> tarafından yayınlandı.<p><small class="text-muted">{{article.created_date}}</small></p></div></div>
+            
+      </p>
+
+      <hr>
+
+      <!-- Preview Image -->
+      
+      {% if article.article_image %}
+      <img class="img-fluid rounded" src="{{article.article_image.url}}" height="180" alt="">
+      {% else %}
+      <img class="img-fluid rounded" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fmoorestown-mall.com%2Fnoimage.gif&f=1&nofb=1" alt="">
+      {% endif %}
+        
+      
+
+      <hr>
+
+      <!-- Post Content -->
+      <p class="lead">
+          {{article.content|safe}}
+      </p>
+
+      <br><br>
+
+    </div>
+    <h4>Yorumlar({{sayi}})</h4><hr>
+    {% if comments %}
+    
+   
+    {% for comment in comments %}
+      <!-- Single Comment -->
+      <div class="media mb-4">
+        <img class="d-flex mr-3 rounded-circle" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.tamindir.com%2Fstatic%2Fimg%2Fuser.png&f=1&nofb=1" width="50" height="50" alt="">
+        
+          
+        
+        <div class="media-body">
+          <big class="mt-0">{{comment.comment_author}}</big><br>
+          <small class="text-muted">{{comment.comment_date}}</small><br>
+          {{comment.comment_content}}
+        </div>
+      </div>
+    {% endfor %}
+    
+      
+    {% else %}
+    <div class = "alert alert-warning">
+      Bu Makaleye Henüz Yorum Yapılmamış.
+    </div>
+    {% endif %}
+      
+    {% if request.user.is_authenticated %}
+    <div class="card my-4">
+      <h5 class="card-header">Yorum Yap</h5>
+      <div class="card-body">
+        <form method="POST" action = "/articles/comment/{{article.id}}">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="formGroupExampleInput">Yorum</label>
+            <textarea name="comment" class="form-control" rows="3"></textarea>
+          </div>
+          <button style="float: right;" type="submit" class="btn btn-primary">Gönder</button>
+        </form>
+      </div>
+    </div>
+    {% else %}
+    <div class="card my-4">
+      <h5 class="card-header">Yorum Yap</h5>
+      <div class="card-body">
+        <form method="POST" action = "{% url 'article:comment' article.id %}">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="formGroupExampleInput">Yorum</label>
+            <textarea name="comment" class="form-control" rows="3"></textarea>
+            <label for="formGroupExampleInput"><p>Ziyaretçi olarak yorum yapıyorsun, dilersen&nbsp;<a href="{% url 'user:login' %}">giriş yap</a>.</p></label>
+          </div>
+          <button style="float: right;" type="submit" class="btn btn-primary">Gönder</button>
+        </form>
+      </div>
+    </div>
+    {% endif %}
+   </div>
+</div>
+
+
+
+{% endblock body %}
+    
+    

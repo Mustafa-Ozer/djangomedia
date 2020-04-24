@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+
+{% block baslik %}
+    <title>trigoin | Makale Ekle</title>
+{% endblock baslik %}
+
+
+{% block body %}
+{% load crispy_forms_tags %}
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h4><br>Makale Oluştur</h4>
+            <hr>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form.media}}
+                {{form|crispy}}
+                <br>
+                <center><button type = "submit" class = "btn btn-danger">Güncelle</button></center><br><br><br>  
+            </form>
+        </div>
+    </div>
+{% endblock body %}
+    
+    

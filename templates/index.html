@@ -1,0 +1,99 @@
+{% extends 'layout.html' %}
+
+
+{% block baslik %}
+   <title>trigoin | Anasayfa</title> 
+{% endblock baslik %}
+
+
+{% block body %}
+  
+    <center><h4 class="text-muted display-4"><i>trigoin</i>'e Hoşgeldiniz,</h4></center>
+          
+    <!--<form>
+      {% csrf_token %}
+      <input type="text" name = "keyword" class="input-sm" maxlength="64" placeholder="Ara...">
+      <button type="submit" class="btn btn-danger btn-sm">Ara</button>
+  </form></div></div>-->  
+  <div class="col">
+    <div class="col-md-6 offset-md-3"> 
+      <div class="col-lg-12">
+        <hr class="my-4"> </div></div></div>
+    <div class="col">
+      <div class="col-md-6 offset-md-3"> 
+        <div class="col-lg-10">
+    
+          
+
+
+      
+    
+</div>
+  {% if articles %}
+  
+
+  
+  <center>
+  
+  <table>
+  <thead>
+  <tr>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <div class="card-group">
+    
+  {% for article in articles %}
+  
+  
+  <tr>
+    <td></td>
+   <td>
+     <div class="card">
+     <p>
+    <div class="media mb-12">
+          
+      {% for about in userabout %}
+      {% if about.user_id == article.author_id %}
+      <img class="d-flex mr-3 ml-2 rounded-circle" src="{{about.pphoto.url}}" width="50" height="50" alt="">
+      {% endif %}
+      {% endfor %}
+        
+      
+      
+      
+        
+      
+      <div class="media-body mr-4">
+        
+        
+        <a href="{% url 'profile' article.author_id %}" style="color:darkslategrey"><b>{{article.author}}</b></a><p><small class="text-muted">{{article.created_date}}</small></p>
+        
+        <h6>{{article.title}}</h6>
+        <p>{{article.content|safe|truncatewords:30}}<a href="{% url 'article:detail' article.id %}"><small class="text-muted">>>Daha Fazla</small></a></p>
+        {% if article.article_image %}
+      <a href="{{article.article_image.url}}"><img class="card-img-top rounded" src="{{article.article_image.url}}" height="200" width="180" alt="Card image cap"></a>
+      {% else %}
+      <img class="card-img-top rounded" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fmoorestown-mall.com%2Fnoimage.gif&f=1&nofb=1" height="200" alt="Card image cap">
+      {% endif %}
+      </div></div>
+        
+  </p>
+</p>
+    {% endfor %}
+  </td></tr></tbody></table></center></div></div>
+  {% else %}
+  <br><br>
+  <div class="row">
+    <div class="col-md-6 offset-md-3"> 
+      <div class="col-lg-10">
+  <div class="alert alert-danger">  
+  Makale Bulunamadı.
+  </div></div></div></div>
+  
+  {% endif %}</div><br><br><br>
+  
+  {% endblock body %}
+    
+    

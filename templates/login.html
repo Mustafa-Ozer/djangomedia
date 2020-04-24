@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+
+
+{% block baslik %}
+    <title>trigoin | Giriş</title>
+{% endblock baslik %}
+    
+
+
+{% block body %}
+{% load crispy_forms_tags %}
+<br><br>
+<div class="card col-md-6 offset-md-3">
+    <center><h4><br>Giriş Yap</h4></center><hr>
+    <div class="col-md-6 offset-md-3">
+        <form method="post">
+            {% csrf_token %}
+            
+            {{form|crispy}}
+            <br>
+            <center><button type = "submit" class = "btn btn-info">Giriş Yap</button>
+            <p><br><a href="{% url 'user:register' %}">Hala bir hesabın yok mu?</a></p></center>
+    </form>
+</div>
+</div><br>
+<br><br>
+{% endblock body %}
+    

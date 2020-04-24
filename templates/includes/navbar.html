@@ -1,0 +1,46 @@
+<nav class="navbar navbar-dark bg-dark">
+    <img src="/media/indir.png" height="30" width="30" alt="">
+    <a class="navbar-brand" href="{% url 'index' %}">Anasayfa</a>
+    <a href=""></a>
+    <a href=""></a><a href=""></a><a href=""></a><a href=""></a><a href=""></a><a href=""></a><a href=""></a>
+    <a href=""></a><a href=""></a><a href=""></a><a href=""></a><a href=""></a><a href=""></a><a href=""></a>
+    <a href=""></a><a href=""></a><a href=""></a><a href=""></a><a href=""></a><a href=""></a><a href=""></a>
+    <a href=""></a><a href=""></a><a href=""></a><a href=""></a><a href=""></a><a href=""></a><a href=""></a>
+    <!--<form>
+      {% csrf_token %}
+      <input type="text" name = "keyword" class="input-sm" maxlength="64" placeholder="Kullanıcı Ara...">
+      <button href="/search" class="btn btn-info btn-sm">Ara</button>
+  </form>-->
+    {% if request.user.is_authenticated %}
+    <div class="nav-item dropdown">
+        <a class="navbar-brand dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          {{request.user.username}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'profil' %}">Profil</a>
+          <a class="dropdown-item" href="{% url 'article:addarticle' %}">Makale Oluştur</a>
+          <a class="dropdown-item" href="/messages">Mesajlar</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'user:logout' %}">Çıkış Yap</a>
+        </div>
+      </div>
+      {% else %}
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'user:login' %}">Giriş Yap<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'user:register' %}">Kayıt Ol</a>
+          </li>
+        </ul>
+        {% endif %}
+      </div>
+    
+  
+    
+  </nav>

@@ -1,0 +1,335 @@
+{% extends 'layout.html' %}
+
+
+{% block baslik %}
+    <title>trigoin | Profil</title>
+{% endblock %}
+
+
+{% block body %}
+
+{% if usersabout %}
+    
+
+    
+{% for about in usersabout %}
+<br>
+<center>
+<div class="container emp-profile">
+    <form method="post">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-img">
+                    
+                    {% if about.pphoto %}
+                    <img class="rounded-circle" src="{{about.pphoto.url}}" height="190" alt="">
+                    {% else %}
+                    <img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.tamindir.com%2Fstatic%2Fimg%2Fuser.png&f=1&nofb=1" class="rounded-circle" width="190" height="190" alt="">
+                    {% endif %}
+                        
+    
+                </div>
+            </div>
+            
+            
+            <div class="col-md-5">
+                <div class="profile-head">
+                    
+                    
+                        <br>
+                        
+                            <h5>
+                                
+                               {{request.user.username}}
+                               {% if request.user.is_superuser %}
+                               <img height="20" width="20" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstatic.vecteezy.com%2Fsystem%2Fresources%2Fpreviews%2F000%2F436%2F258%2Fnon_2x%2Fvector-valid-icon.jpg&f=1&nofb=1" alt="">                   
+                               {% endif %}
+                            </h5><br>
+                            <h5>
+                                {{request.user.first_name}}
+                            </h5><br>
+                            <div class="col">
+                                <a href="{% url 'edit' %}" class = "btn btn-primary">Düzenle</a>
+                                <a href="{% url 'article:addarticle' %}" class = "btn btn-primary">Makale Oluştur</a>
+                            </div><br>
+                            
+                            
+                </div>
+            </div>
+            
+        </div>
+        <div class="row" style="margin-top:50px;">
+            <div>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active show" id="article-tab" data-toggle="tab" href="#article" role="tab" aria-controls="article" aria-selected="false">Makaleler</a>  
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Bilgiler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Linkler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="true">Hakkında</a>
+                    </li>
+                </ul>
+                <br>
+        </div>
+            <div class="tab-content profile-tab" id="myTabContent">
+                <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Websitelerim</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><a href="{{about.links}}">{{about.links}}</a></p>
+                                </div>
+                            </div>
+                </div>
+                <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">
+                    <div class="row ml-5">
+                        <div class="col-md-6">
+                            <p class="text-muted">{{about.about}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="row ml-5">
+                                <div class="col-md-6">
+                                    <label>Email</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>{{request.user.email}}</p>
+                                </div>
+                            </div>
+                            <div class="row ml-5">
+                                <div class="col-md-6">
+                                    <label>Telefon</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>{{about.phone}}</p>
+                                </div>
+                            </div>
+                            <div class="row ml-5">
+                                <div class="col-md-6">
+                                    <label>İş</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>{{about.prof}}</p>
+                                </div>
+                            </div>
+                    </div>
+                    
+                    
+                    <div class="tab-pane fade active show" id="article" role="tabpanel" aria-labelledby="article-tab">
+                        
+                           
+                                        {% if articles %}  
+                                        
+                                        <div class="row col-5" style="margin-right:150px;margin-left:20px;" >
+                                                {% for article in articles%}
+                                                <div class="row" >
+                                                <div class="card rounded">
+                                                    
+                                                    <div class="card-image">
+                                                        <br>
+                                                        {% if article.article_image %}
+                                                        <img class="rounded" src="{{article.article_image.url}}" width="350" height="200" alt="Alternate Text">
+                                                        {% else %}
+                                                        <img class="rounded" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fmoorestown-mall.com%2Fnoimage.gif&f=1&nofb=1" width="350" height="200" alt="">
+                                                        {% endif %}
+                                                            
+                                                        
+                                                    </div>
+                                                    <div class="card-image-overlay m-auto">
+                                                        <div class="ad-title m-auto">
+                                                            <center>
+                                                                <a href="{% url 'article:detail' article.id %}"><h5>{{article.title}}</h5></a></center>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body text-center">
+                                                        <p>{{article.content|safe|truncatewords:30}}</p>
+                                                        <a class="btn btn-info btn-xs" href="{% url 'article:update' article.id %}"><span class="glyphicon glyphicon-edit"></span> Düzenle</a>
+                                                        <a href="{% url 'article:delete' article.id %}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Sil</a>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                                {% else %}
+                                                <tr>
+                                                    <div class="alert alert-danger">
+                                                       <p>Henüz makaleniz bulunmuyor...</p>
+                                                    </div>
+                                                </tr>
+                                                {% endif %}
+                                    
+                                    
+                            </div>
+                        </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </form>           
+</div>
+
+
+
+
+
+    
+
+{% endfor %}
+<br><br><br><br><br><br><br><br><br>
+{% else %}
+<br>
+<center>
+<div class="container emp-profile">
+    <form method="post">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-img">
+                    
+                    {% if about.pphoto %}
+                    <img class="rounded-circle" src="{{about.pphoto.url}}" height="190" alt="">
+                    {% else %}
+                    <img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.tamindir.com%2Fstatic%2Fimg%2Fuser.png&f=1&nofb=1" class="rounded-circle" width="190" height="190" alt="">
+                    {% endif %}
+                        
+    
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="profile-head">
+                        
+                            <h5>
+                               {{request.user.username}}
+                            </h5><br>
+                            <h5>
+                                {{request.user.first_name}}
+                            </h5><br>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active show" id="article-tab" data-toggle="tab" href="#article" role="tab" aria-controls="article" aria-selected="false">Makaleler</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Bilgiler</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Linkler</a>
+                                </li>
+                            </ul>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <a href="{% url 'edit' %}" class = "btn btn-primary">Düzenle</a>
+                <a href="{% url 'article:addarticle' %}" class = "btn btn-primary">Makale Oluştur</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-work">
+                    <strong><i><p><br>Hakkında</p></i></strong>
+                    <i style="color: rgb(156, 155, 155);">Bilgi verilmedi.</i><br>
+                    
+                </div>
+            </div>
+            <div class="tab-content profile-tab" id="myTabContent">
+                <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Websitelerim</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><a href="#">Bilgi verilmedi.</a></p>
+                                </div>
+                            </div>
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Email</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>{{request.user.email}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Telefon</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>Bilgi verilmedi.</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>İş</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>Bilgi verilmedi.</p>
+                                </div>
+                            </div>
+                    </div>
+                    
+                    
+                    <div class="tab-pane fade active show" id="article" role="tabpanel" aria-labelledby="article-tab">
+                        <div class="row">
+                            <div class="col-md-18">
+                                        {% if articles %}  
+                                        
+                                        <div class="row-3 col-5" >
+                                                {% for article in articles%}
+                                                
+                                                <div class="card rounded">
+                                                    
+                                                    <div class="card-image">
+                                                        <br>
+                                                        {% if article.article_image %}
+                                                        <img class="rounded" src="{{article.article_image.url}}" width="350" height="200" alt="Alternate Text">
+                                                        {% else %}
+                                                        <img class="rounded" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fmoorestown-mall.com%2Fnoimage.gif&f=1&nofb=1" width="350" height="200" alt="">
+                                                        {% endif %}
+                                                            
+                                                        
+                                                    </div>
+                                                    <div class="card-image-overlay m-auto">
+                                                        <div class="ad-title m-auto">
+                                                            <center>
+                                                                <a href="{% url 'article:detail' article.id %}"><h5>{{article.title}}</h5></a></center>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body text-center">
+                                                        <p>{{article.content|safe|truncatewords:30}}</p>
+                                                        <a class="btn btn-info btn-xs" href="{% url 'article:update' article.id %}"><span class="glyphicon glyphicon-edit"></span> Düzenle</a>
+                                                        <a href="{% url 'article:delete' article.id %}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Sil</a>
+                                                    </div>
+                                                </div>
+                                                
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                                {% else %}
+                                                <tr>
+                                                    <div class="alert alert-danger">
+                                                       <p>Henüz makaleniz bulunmuyor...</p>
+                                                    </div>
+                                                </tr>
+                                                {% endif %}
+
+                                    
+                            </div>
+                        </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </form>           
+</div><br><br><br><br><br><br><br><br><br>
+{% endif %}
+</center>
+{% endblock body %}
+        

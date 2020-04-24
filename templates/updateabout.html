@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+
+{% block baslik %}
+    <title>trigoin | Profili Düzenle</title>
+{% endblock baslik %}
+
+
+{% block body %}
+{% load crispy_forms_tags %}
+<br><br>
+<div class="card col-md-6 offset-md-3">
+    <center><h4><br>Profili Düzenle</h4></center><hr>
+    <div class="col-md-6 offset-md-3">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.media}}
+            {{form|crispy}}
+            
+            <center><button type = "submit" class = "btn btn-info">Değişiklikleri kaydet</button><br>
+    </form><br>
+</div>
+</div><br>
+<br><br>
+
+{% endblock body %}
+    
